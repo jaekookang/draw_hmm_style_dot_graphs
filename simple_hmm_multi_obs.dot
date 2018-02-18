@@ -1,0 +1,50 @@
+// simple HMM style graph (multiple observations)
+// ref: http://www.graphviz.org/content/attrs 
+// 2017-08-01 jk
+
+digraph G {
+        ratio=auto;
+        orientation=landscape;
+        center=true;
+        label="title";
+        labelloc="t";
+
+        s0 [label="s0"]
+        s1 [label="s1"]
+        s2 [label="s2"]
+        node [shape=doublecircle]; s3 [label="s3"]
+        {rank=same; s0 s1 s2 s3}
+        {node[shape=record]
+        o01 [label="{a | b | c}"]
+        o02 [label="{a | b | c}"]
+        o03 [label="{a | b | c}"]
+        o11 [label="{a | b | c}"]
+        o12 [label="{a | b | c}"]
+        o13 [label="{a | b | c}"]
+        o21 [label="{a | b | c}"]
+        o22 [label="{a | b | c}"]
+        o23 [label="{a | b | c}"]
+        }
+
+        subgraph trans {
+        s0 -> s1 [label="t1"]
+        s1 -> s2 [label="t2"]
+        s2 -> s3 [label="t3"]}
+
+        subgraph selfloop {
+        s0:ne -> s0:nw [label="self1"]
+        s1:ne -> s1:nw [label="self2"]
+        s2:ne -> s2:nw [label="self3"]
+        }
+
+        subgraph obs {
+        s0 -> {o01 o02 o03}
+        s1 -> {o11 o12 o13}
+        s2 -> {o21 o22 o23}
+        }
+        
+}
+
+// shell commands
+// dot -Tps test.dot -o test.ps
+// dot -Tps test.dot | ps2pdf - test.pdf

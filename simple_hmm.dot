@@ -1,0 +1,47 @@
+// simple HMM style graph
+// 2017-08-01 jk
+
+digraph G {
+        ratio=auto;
+        orientation=landscape;
+        center=true;
+        rankdir=LR;
+
+        s0 [label="s0"]
+        s1 [label="s1"]
+        s2 [label="s2"]
+        s3 [label="s3"]
+        {node[shape=record]
+        o0 [label="a | b | c"]
+        o1 [label="a | b | c"]
+        o2 [label="a | b | c"]
+        }
+        {node [color=white];
+        title [label="title"]}
+
+        {rank=same; s0 o0}
+        {rank=same; title s1 o1}
+        {rank=same; s2 o2}
+
+        subgraph trans {
+        s0 -> s1 [label="t1"]
+        s1 -> s2 [label="t2"]
+        s2 -> s3 [label="t3"]}
+
+        subgraph selfloop {
+        s0 -> s0 [label="self1"]
+        s1 -> s1 [label="self2"]
+        s2 -> s2 [label="self3"]
+        }
+
+        subgraph obs {
+        s0 -> o0
+        s1 -> o1
+        s2 -> o2
+        }
+        
+}
+
+// shell commands
+// dot -Tps test.dot -o test.ps
+// dot -Tps test.dot | ps2pdf - test.pdf
